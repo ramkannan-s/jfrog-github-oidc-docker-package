@@ -23,6 +23,7 @@ jobs:
           ID_TOKEN=$(curl -sLS -H "User-Agent: actions/oidc-client" -H "Authorization: Bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
           "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=access-oidc-demo" | jq .value | tr -d '"')
           echo "ID_TOKEN=${ID_TOKEN}" >> $GITHUB_ENV
+          echo "ID_TOKEN=${ID_TOKEN}"
           
        - name: Exchange token with access
          env:
@@ -37,6 +38,7 @@ jobs:
           \"subject_token_type\": \"urn:ietf:params:oauth:token-type:id_token\"}" \
           | jq .access_token | tr -d '"')
           echo "ACCESS_TOKEN=${ACCESS_TOKEN}" >> $GITHUB_ENV
+          echo "ACCESS_TOKEN=${ACCESS_TOKEN}"
 
        - name: Setup JFrog CLI
          uses: jfrog/setup-jfrog-cli@v3
