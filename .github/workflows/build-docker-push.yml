@@ -36,7 +36,7 @@ jobs:
          run: |
           ACCESS_TOKEN=$(curl -XPOST "${JF_URL}/token" -d "{\"grant_type\": \"urn:ietf:params:oauth:grant-type:token-exchange\", \"subject_token_type\":\"urn:ietf:params:oauth:token-type:access_token\", \"subject_token\": \"$ID_TOKEN\", \"provider_name\": \"github-oidc\"}" | jq .access_token | tr -d '"')
           echo "ACCESS_TOKEN=${ACCESS_TOKEN}" >> $GITHUB_ENV
-          jf docker login 'https://psemea.jfrog.io/' --username 'ramkannans' --password '${{ env.JF_PASSWORD }}'
+          jf docker login 'https://psemea.jfrog.io/' --username 'ramkannans' --password '${ACCESS_TOKEN}'
           echo "$ID_TOKEN"
           echo "$GITHUB_ENV"
           
@@ -46,7 +46,7 @@ jobs:
          run: |
            echo "$ID_TOKEN"
            echo "$GITHUB_ENV"
-          # jf docker login 'https://psemea.jfrog.io/' --username 'ramkannans' --password '${{ env.JF_PASSWORD }}'
+          # jf docker login 'https://psemea.jfrog.io/' --username 'ramkannans' --password '${{ env.JF_TOK }}'
 
        - name: Perform Docker Build Image
          run: jf docker build -t 'psemea.jfrog.io/${{ env.PLATFORM_REPO }}/docker-oidc-publish:${{ github.run_number }}' .
