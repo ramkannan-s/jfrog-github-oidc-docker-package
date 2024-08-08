@@ -45,7 +45,7 @@ jobs:
          run: |
            echo "$ID_TOKEN"
            echo "$GITHUB_ENV"
-          # jf docker login 'https://psemea.jfrog.io/' --username 'ramkannans' --password '${{ env.JF_TOK }}'
+           jf docker login 'https://psemea.jfrog.io/' --username 'ramkannans' --password '${{ env.JF_TOK }}'
 
        - name: Perform Docker Build Image
          run: jf docker build -t 'psemea.jfrog.io/${{ env.PLATFORM_REPO }}/docker-oidc-publish:${{ github.run_number }}' .
