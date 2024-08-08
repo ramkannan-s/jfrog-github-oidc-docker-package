@@ -31,7 +31,7 @@ jobs:
          run: |
           ACCESS_TOKEN=$(curl -XPOST -H "Content-Type: application/json" \
           "${JF_URL}/access/api/v1/oidc/token" \
-          -d "{\"provider_name\":\"deepu19t\", \
+          -d "{\"provider_name\":\"ramkannan-s\", \
           \"subject_token\": \"${ID_TOKEN}\", \
           \"grant_type\": \"urn:ietf:params:oauth:grant-type:token-exchange\", \
           \"subject_token_type\": \"urn:ietf:params:oauth:token-type:id_token\"}" \
@@ -49,6 +49,7 @@ jobs:
           JF_ACCESS_TOKEN: ${{ env.ACCESS_TOKEN }}
          run: |
            echo '${{ env.JF_ACCESS_TOKEN }}'
+           echo '${{ env.ACCESS_TOKEN }}'
            jf docker login '${{ env.JF_URL }}/' --username 'ramkannans' --password '${{ secrets.JF_TOK }}'
 
        - name: Perform Docker Build Image
