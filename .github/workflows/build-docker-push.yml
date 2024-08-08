@@ -5,18 +5,13 @@ on: push
 # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-cloud-providers#adding-permissions-settings
 permissions:
   id-token: write
-jobs:
-  build:
-     runs-on: ubuntu-latest
      env:
       OIDC_AUDIENCE: 'jfrog-github'
+      OIDC_PROVIDER: 'githubtest'
       PLATFORM_REPO: 'simple-sample-docker'
      steps:
        - name: Checkout
          uses: actions/checkout@v3
-              
-       - name: Setup Node docker
-         uses: actions/setup-node@v3
    
        - name: Setup JFrog CLI
          uses: jfrog/setup-jfrog-cli@v3
@@ -24,13 +19,13 @@ jobs:
            JF_URL: 'https://psemea.jfrog.io'
          with:
            oidc-provider-name: ${{ env.OIDC_PROVIDER }}
-           #oidc-audience: ${{ env.OIDC_AUDIENCE }}
+           oidc-audience: ${{ env.OIDC_AUDIENCE }}
            
        - name: Set CLI Config
-         run: jf docker build -t psemea.jfrog.io/${{ env.PLATFORM_REPO }}/docker-oidc-publish:${{ github.run_number }} .
+         run: jf docker build -t 'psemea.jfrog.io/${{ env.PLATFORM_REPO }}/docker-oidc-publish:${{ github.run_number }}' .
            
        - name: Push Image
-         run: jf docker push psemea.jfrog.io/${{ env.PLATFORM_REPO }}/docker-oidc-publish:${{ github.run_number }} --build-name=github-docker-oidc-publish --build-number=${{ github.run_number }}
+         run: jf docker push 'psemea.jfrog.io/${{ env.PLATFORM_REPO }}/docker-oidc-publish:${{ github.run_number }}' --build-name=github-docker-oidc-publish --build-number=${{ github.run_number }}
          
        - name: Publish Build info With JFrog CLI
          run: |
