@@ -13,7 +13,7 @@ jobs:
       OIDC_AUDIENCE: 'jfrog-github'
       OIDC_PROVIDER: 'githubtest'
       PLATFORM_REPO: 'simple-sample-docker'
-      JF_URL: 'https://psemea.jfrog.io'
+      JF_URL: 'https://psemea.jfrog.io/'
      steps:
        - name: Get id token
          run: |
@@ -40,7 +40,7 @@ jobs:
        - name: Perform Docker Login
          env:
           ID_TOKEN: ${{ env.ACCESS_TOKEN }}
-         run: jf docker login '${{ env.JF_URL }}' --username 'ramkannans' --password '$JF_ACCESS_TOKEN'
+         run: jf docker login '${{ env.JF_URL }}' --username 'ramkannans' --password '${{ env.ACCESS_TOKEN }}'
 
        - name: Perform Docker Build Image
          run: jf docker build -t 'psemea.jfrog.io/${{ env.PLATFORM_REPO }}/docker-oidc-publish:${{ github.run_number }}' .
